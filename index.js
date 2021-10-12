@@ -94,18 +94,16 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(data, getWinnersCB, getYearsCB) {
-    const years = getYearsCB(data, getFinals);
-    const winners = getWinnersCB(data, getFinals);
-    const returnArray = [];
-    for (let i = 0; i < years.length; i++) {
-        const displayString = `In ${years[i]}, ${winners[i]} won the world cup!`;
-        returnArray.push(displayString);
+function getWinnersByYear(cb1, cb2, cb3, data) {
+    let winners = cb1(cb3, data);
+    let years = cb2(cb3, data);
+    let winningString = winners.forEach((item, index) => {
+        console.log(`In ${years[index]}, ${item} won the world cup!`)
+    })
     }
-    return returnArray;
-  }
-  console.log('Task 5', getWinnersByYear(fifaData, getYears, getWinners));
-  
+    
+    getWinnersByYear(getWinners, getYears, getFinals, fifaData);
+    
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -118,11 +116,20 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getFinalsCB) {
+   const data = getFinalsCB;
+   const homeGoalAvg = data.reduce((total, item) => {
+       total += parseInt(item["Home Team Goals"]);
+       return total/data.length;
+   }, 0)
+   const awayGoalAvg = data.reduce((total, item) => {
+       total += parseInt(item["Away Team Goals"]);
+       return total/data.length;
+   }, 0)
+   return Math.round(homeGoalAvg * 100) / 100+" "+Math.round(awayGoalAvg * 100) / 100;
 }
 
-
+console.log('Task 6', getAverageGoals(getFinals(fifaData)));
 
 
 /// 🥅 STRETCH 🥅 ///
