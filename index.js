@@ -82,7 +82,7 @@ function getWinners(finalsList) {
     return winners
   }
 
-  console.log(getWinners(getFinals(fifaData)));
+  console.log('Task 4', getWinners(getFinals(fifaData)));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use the higher-order function getWinnersByYear to do the following:
@@ -94,10 +94,18 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
-}
-
+function getWinnersByYear(data, getWinnersCB, getYearsCB) {
+    const years = getYearsCB(data, getFinals);
+    const winners = getWinnersCB(data, getFinals);
+    const returnArray = [];
+    for (let i = 0; i < years.length; i++) {
+        const displayString = `In ${years[i]}, ${winners[i]} won the world cup!`;
+        returnArray.push(displayString);
+    }
+    return returnArray;
+  }
+  console.log('Task 5', getWinnersByYear(fifaData, getYears, getWinners));
+  
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
